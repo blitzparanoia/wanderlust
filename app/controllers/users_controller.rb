@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-     # if logged_in?
-     #   redirect to '/destination'
-     # else
+     if logged_in?
+        redirect to '/destination'
+      else
       erb :"user/new"
-   # end
+    end
 end
 
   post '/signup' do
@@ -19,5 +19,7 @@ end
   end
 end
 end
+
+
 
 end
