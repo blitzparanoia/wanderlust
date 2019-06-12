@@ -1,11 +1,8 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-     if logged_in?
-        redirect to '/destination'
-      else
-      erb :"user/new"
-    end
+     redirect '/destination' if session[:user_id] != nil
+     erb :'/user/new'
 end
 
   post '/signup' do
