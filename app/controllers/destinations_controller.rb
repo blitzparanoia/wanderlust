@@ -15,7 +15,7 @@ class DestinationsController < ApplicationController
  get '/destination' do
    if session[:user_id] != nil
      @user = current_user
-     erb :'/destination/new' #test redirect change to a show page
+     erb :'/destination/show' #test redirect change to a show page
    else
      redirect '/login'
    end
@@ -23,7 +23,7 @@ class DestinationsController < ApplicationController
 
  post '/destination' do
    @user = User.find(session[:user_id])
-   redirect 'destination/new' if params[:destinations].empty?
+   redirect '/destination/new' if params[:destinations].empty?
    @user.destinations << Destination.new(params[:destinations])
    redirect "/user/#{@user.slug}"
  end
@@ -32,7 +32,7 @@ class DestinationsController < ApplicationController
   if session[:user_id] != nil
     @destination = Destination.find(params[:id])
     #binding.pry
-    erb :'/destination/new' #test
+    erb :'/destination/show' #want to show destinations of user
   else
     redirect '/login'
   end
