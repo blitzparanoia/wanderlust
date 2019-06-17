@@ -1,51 +1,51 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-     redirect '/destination' if session[:user_id] != nil
-     erb :'/user/new'
-end
+    if !session[:user_id]
+      erb :'/user/new'
+    else
+      redirect '/'
+    end
+  end
 
   post '/signup' do
-
-    redirect '/signup' if params[:username].empty? || params[:password].empty?
-    @user = User.new(params)
-      if @user.save
-				session[:user_id] = @user.id
-				redirect '/destination'
-      else
-        redirect '/signup'
+    if params[:username].empty? || params[:password].empty?
+      redirect '/signup'
+    else
+      user = User.create(params)
+      session[:user_id] = user.id
+      redirect '/destination'
+    end
   end
-end
 
-get '/login' do
-  if session[:user_id] != nil
-  @user = current_user
-  redirect '/destination'
-else
-  erb :'user/login'
-end
-end
+  get '/login' do
+    if !logged_in?
+     erb :'user/login'
+   else
+     redirect '/destination'
+   end
+  end
 
   post '/login' do
-    @user = User.find_by(username: params[:username])
-    if @user && @user.authernticate(params[:password])
-      session[:user_id] = @user.id
+    if params[:username].empty? || params[:password].empty?
+      redirect '/login'
+    end
+
+    user = User.find_by(username: params[:username])
+    if user && user.authenticate(params[:password])
+      session[user_id] = user.id
       redirect '/destination'
     else
-      redirect '/login'
+      redirect '/signup'
+    end
   end
-end
 
   get '/logout' do
-    session.clear if session[:user_id] != nil
-    redirect '/login'
+    if logged_in?
+      #the user logs out
+      session.destroy
+      redirect '/'
+    end
   end
-
-   get '/users/:slug' do
-       @user = User.find_by_slug(params[:slug])
-       erb :'/users/show'
-   end
-
-
 
 end
