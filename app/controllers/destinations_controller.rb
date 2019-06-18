@@ -27,18 +27,12 @@ end
 
  post '/destination' do
    @user = User.find(session[:user_id])
-   if params[:city].empty? || params[:country].empty? || params[:description].empty?
+   if params[:city].empty? #|| params[:country].empty? || params[:description].empty?
      redirect '/destination/new'
    else
    @user.destinations << Destination.new(params[:destinations])
    redirect "/user/#{@user.slug}"
  end
- # if params[:city].empty? || params[:country].empty? || params[:description].empty?
- #   redirect '/destination/new'
- # else
- #   user = current_user.destinations.create(params)
- #   redirect "/user/#{@user.slug}"
- # end
 end
 
  get '/destination/:id' do
@@ -70,10 +64,6 @@ end
 
 
   patch '/destination/:id' do
-    # redirect "destination/#{params[:user_id]}" if params[:destinations].empty?
-    # @destination = Destination.find(params[:user_id])
-    # @destination.update(params[:destinations])
-    # redirect "/destination/#{@destination.user_id}"
     @destinations = Destination.find(params[:user_id])
     @destinations.update(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description])
     redirect "/destination/#{@destinations.user_id}"

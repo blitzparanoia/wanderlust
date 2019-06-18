@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     if !session[:user_id]
       erb :'/user/new'
     else
-      redirect '/'
+      redirect '/destination'
     end
   end
 
@@ -46,6 +46,11 @@ class UsersController < ApplicationController
       session.destroy
       redirect '/'
     end
+  end
+
+  get '/user/:slug' do
+  @user = User.find_by_slug(params[:slug])
+  erb :'/user/show'
   end
 
 end
