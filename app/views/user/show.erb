@@ -7,6 +7,9 @@
 <form action="/destination/<%= current_user.id %>/edit">
     <input type="submit" value="Edit">
 </form>
+<form action="/logout">
+    <input type="submit" value="Logout" />
+</form>
 
 <% current_user.destinations.each do |x| %>
 <hr>
