@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    if !session[:user_id]
+    if !logged_in
       erb :'/user/new'
     else
       redirect '/destination'
@@ -27,16 +27,16 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
-    if params[:username].empty? || params[:password].empty?
-      redirect '/login'
-    end
+    # if params[:username].empty? || params[:password].empty?
+    #   redirect '/login'
+    # end
 
     user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
-      session[user_id] = user.id
+      session[:user_id] = user.id
       redirect '/destination'
     else
-      redirect '/signup'
+      redirect '/signup' #please log in message
     end
   end
 
@@ -50,7 +50,8 @@ class UsersController < ApplicationController
 
   get '/user/:slug' do
   @user = User.find_by_slug(params[:slug])
-  erb :'/user/show'
+  @destinations= @user.destinations
+   erb :'user/show'
   end
 
 end
