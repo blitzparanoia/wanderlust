@@ -6,13 +6,24 @@ class DestinationsController < ApplicationController
     end
 
     post '/destination' do
-   @user = User.find(session[:user_id])
-   if params[:city].empty? || params[:country].empty? || params[:description].empty?
-     redirect '/destination/new'
-   else
-   @user.destinations << Destination.new(params[:destinations])
-   redirect "/user/#{@user.id}"
- end
+ #   @user = User.find(session[:user_id])
+ #   if params[:city].empty? || params[:country].empty? || params[:description].empty?
+ #     redirect '/destination/new'
+ #   else
+ #   @user.destinations << Destination.new(params[:destinations])
+ #   redirect "/user/#{@user.id}"
+ # end
+
+ if params[:city].empty?
+    redirect "/destination/new"
+  else
+    user = User.find_by_id(session[:user_id])
+    destination = Destination.create(params)
+    destination.user = user
+    destination.save
+    # redirect "/tweets/:#{tweet.id}"
+    redirect "/destination"
+  end
 end
 
 

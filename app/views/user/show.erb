@@ -1,9 +1,17 @@
-<p> Welcome
-<h2> Destinations </h2>
+<h1>Welcome <%= current_user.username %>,</h1>
 
-
-
-<h2>user show page</h2>
+<h2>Here lies all the places you have ever visited...</h2>
 <form method="POST" action="/destination/new">
-  <p>Click "New Destination" for create a new destination <input type="submit" id="submit" value="New_Destination"></p>
+  <p>Are you a world class traveler? Add more places! <input type="submit" id="submit" value="New Destination"></p>
 </form>
+
+<% current_user.destinations.each do |x| %>
+<hr>
+<br>
+<p><%= "#{x.city}" %></p>
+<p><%="#{x.country}"%></p>
+<p><%= "#{x.rating}" %></p>
+<p><%= "#{x.description}" %></p>
+<br>
+
+<% end %>
