@@ -1,109 +1,78 @@
 class DestinationsController < ApplicationController
 
-  get '/destination' do
-    if logged_in?
+    get '/destination' do
       @destinations = Destination.all
-      @user= current_user
-      erb :'/destination/show'
-    else
-      redirect to '/login'
+      erb :'/user/show'
     end
-  end
 
-
-
-  get '/destination/new' do
-    @destinations = Destination.all
-    if logged_in?
-      erb :'destination/new'
-    else
-      redirect '/login'
-  end
-end
-
-#   post '/destination/new' do
-#  #    if session[:user_id] != nil
-#  #      redirect '/destination/new'
-#  #    else
-#  #    redirect '/login'
-#  # end
-#
-# end
-
- post '/destination' do
+    post '/destination' do
+   @user = User.find(session[:user_id])
    if params[:city].empty? || params[:country].empty? || params[:description].empty?
      redirect '/destination/new'
    else
-     destination = Destination.create(params)
-     current_user.destinations << destination
-     redirect '/destination/#{destination.id}'
-   end
+   @user.destinations << Destination.new(params[:destinations])
+   redirect "/user/#{@user.id}"
  end
+end
 
-#  if logged_in?
-#     if Destination.new(params[:destinations]).valid?
-#       @destination = current_user.destinations.build(params[:destinations])
-#       @destination.save
-#       redirect to "/destination"
-#     else
-#       redirect to "/destination/new"
-#     end
-#   end
-# end
 
- get '/destination/:id' do
-   if !logged_in?
-     redirect '/login'
-   end
-    @destination = Destination.find(params[:id])
-    #binding.pry
-    erb :'/destination/show' #want to show destinations of user
-  end
+    get '/destination/new' do
+      erb :'/destination/new'
+    end
 
-get '/destination/:slug' do
-   @destination = Destination.find_by_slug(params[:slug])
-   erb :'destination/show'
- end
-
-  # post '/destination/:slug' do
-  #   redirect "/destination/#{params[:user_id]}"
-  # end
-
-  get '/destination/:id/edit' do
-   if !logged_in?
-     redirect '/login'
-   end
-     @destination = Destination.find(params[:id])
-     if current_user.id != @destination.user_id
-       redirect '/destination'
+    post '/destination/new' do
+        if session[:user_id] != nil
+          redirect '/destination/new'
+        else
+        redirect '/login'
      end
-     erb :'/destination/edit'
- end
+    end
 
+    get '/destination/:id' do
+      find_destination
+      erb :'/destination/show'
+    end
 
-  patch '/destination/:id' do
-    if params[:city].empty? || params[:country].empty? || params[:description].empty?
-     redirect "description/#{params[:id]}/edit"
-   end
-   @destination=Destination.find(params[:id])
-   @destination.city=params[:city]
-   @destiantion.country=params[:country]
-   @destination.rating=params[:rating]
-   @destination.description=params[:description]
-   @destination.save
-   redirect "/destination/#{@destination.id}"
-  end
-
-    delete '/destination/:id/delete' do
+    get '/destination/:id/edit' do
+      find_destination
       if logged_in?
-    @destination=Destination.find(params[:id])
+        if @destination.user == current_user
+           erb :'/destination/edit'
+        else
+           redirect to "/user/#{@destination.id}"
+        end
+      else
+       redirect to '/'
+      end
+    end
 
-  if current_user == @destination.user_id
-    @destination.delete
-  end
-    redirect "/destination"
-  else
-    redirect "/login"
-  end
-  end
+    patch '/destination/:id' do
+      find_destination
+      if logged_in?
+        if @destination.user == current_user && params[:city] != "" && params[:country] != "" && params[:rating] != "" && params[:description] != ""
+
+           @destination.update(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description] )
+           redirect to "/destination/#{@destination.id}"
+        else
+           redirect to "/user/#{@destination.id}"
+        end
+      else
+        redirect to '/'
+      end
+    end
+
+    delete '/destination/:id' do
+      find_destination
+      if @destination.user == current_user
+        @destination.destroy
+        redirect to '/destination'
+      else
+        redirect to '/destination'
+      end
+    end
+
+
+    def find_destination
+      @destination = Destination.find_by(id: params[:id])
+    end
 end

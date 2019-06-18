@@ -1,14 +1,10 @@
-<h1>Welcome, <%= current_user.username %> </h1>
-<h2> Destinations show page </h2>
+<h2>Destination:</h2>
 
-<h2>Your list of places:</h2
-
-
-
-
-
-
-
-<form method="POST" action="/destination/new">
-  <p>Click "New Destination" for create a new destination <input type="submit" id="submit" value="New Destination"></p>
+<a href="/destination/<%= @destination.id %>/edit">Edit</a>
+<br><br>
+<form action="/destination/<%= @destination.id %>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" name="" value="Delete Entry">
 </form>
+
+<% end  %>
