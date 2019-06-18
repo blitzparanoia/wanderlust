@@ -1,7 +1,8 @@
-<h1>Editing A Destination:</h1>
+<h1>Edit Destination #<%= current_user.id %> by <%= current_user.username %></h1>
 
-<form method="POST" action="/destination/<%= @destination.user_id %>">
-  <input type="hidden" id="hidden" name="_method" value="patch">
-  <p>City: <input type="text" id="content" name="destination[city]" value="<%= @destination.city %>"></p>
-  <input type="submit" id="submit" value="Submit">
+<form action="/destination/<%=current_user.id%>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input type="text" name="content" value="<%=current_user.destinations%>" size="100">
+  <input type="submit" id="submit" value="Edit Destination">
+
 </form>

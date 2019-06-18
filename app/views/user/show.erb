@@ -4,6 +4,9 @@
 <form method="POST" action="/destination/new">
   <p>Are you a world class traveler? Add more places! <input type="submit" id="submit" value="New Destination"></p>
 </form>
+<form action="/destination/<%= current_user.id %>/edit">
+    <input type="submit" value="Edit">
+</form>
 
 <% current_user.destinations.each do |x| %>
 <hr>

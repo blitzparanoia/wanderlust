@@ -1,10 +1,9 @@
-<h1>Destination #<%= @destination.id %> by <%= @user.username %></h1>
+<h1>Destination #<%= current_user.id %> by <%= current_user.username %></h1>
 
-<form action="/destination/<%=@destination.id%>/delete" method="post">
+<form action="/destination/<%=current_user.id%>/delete" method="post">
   <input type="hidden" name="_method" value="delete">
-  <input type="submit" id="submit" value="Delete Tweet">
+  <input type="submit" id="submit" value="Delete">
 </form>
 <p>
-  <a href="/tweets/<%=@destination.id%>/edit">Edit Tweet</a>
+  <a href="/destination/<%=current_user.id%>/edit">Edit</a>
 </p>
-<p><%= @destination.city %></p>

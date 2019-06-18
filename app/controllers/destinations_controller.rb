@@ -46,15 +46,37 @@ end
 
     get '/destination/:id/edit' do
       find_destination
-      if logged_in?
-        if @destination.user == current_user
-           erb :'/destination/edit'
-        else
-           redirect to "/user/#{@destination.id}"
-        end
-      else
-       redirect to '/'
-      end
+      # if logged_in?
+      #   if @destination.user == current_user
+      #      erb :'/destination/edit'
+      #   else
+      #      redirect to "/user/#{@destination.id}"
+      #   end
+      # else
+      #  redirect to '/'
+      # end
+      #2nd attemp below
+   #    if logged_in?
+   #   @destination = Destination.find(params[:user_id])
+   #   if @destination.user_id == current_user.user_id
+   #     erb :'destination/edit'
+   #   else
+   #     redirect '/destination'
+   #   end
+   # else
+   #   redirect '/login'
+   # end
+   if logged_in?
+     if Destination.find(params[:id]).user.id == session[:user_id]
+       @destination = Destination.find(params[:id])
+       @user = @destination.user
+       erb :"/destination/edit"
+     else
+       redirect '/destination/edit'
+     end
+   else
+     redirect '/login'
+   end
     end
 
     patch '/destination/:id' do
