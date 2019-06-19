@@ -1,9 +1,18 @@
-<h1>Destination #<%= current_user.id %> by <%= current_user.username %></h1>
+<h1>destination show page</h1>
 
-<form action="/destination/<%=current_user.id%>/delete" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <input type="submit" id="submit" value="Delete">
+
+<form method="post" action="/destination/<%=current_user.id%>/edit">
+
+<% current_user.destinations.each do |x| %>
+<hr>
+<br>
+  <ul>
+    <li>City: <input type="text" name="new_city" value="<%= "#{x.city}" %>"></li>
+    <li>Country: <%="#{x.country}"%></li>
+    <li>Rating: <%= "#{x.rating}" %></li>
+    <li>Favorite Memory: <%= "#{x.description}" %></li>
+  </ul>
+<br>
+
+<% end %>
 </form>
-<p>
-  <a href="/destination/<%=current_user.id%>/edit">Edit</a>
-</p>

@@ -4,7 +4,7 @@
 <form method="POST" action="/destination/new">
   <p>Are you a world class traveler? Add more places! <input type="submit" id="submit" value="New Destination"></p>
 </form>
-<form action="/destination/<%= current_user.id %>/edit">
+<form action="/destination/edit">
     <input type="submit" value="Edit">
 </form>
 <form action="/logout">
@@ -14,10 +14,12 @@
 <% current_user.destinations.each do |x| %>
 <hr>
 <br>
-<p><%= "#{x.city}" %></p>
-<p><%="#{x.country}"%></p>
-<p><%= "#{x.rating}" %></p>
-<p><%= "#{x.description}" %></p>
+  <ul>
+    <li>City: <%= "#{x.city}" %></li>
+    <li>Country: <%="#{x.country}"%></li>
+    <li>Rating: <%= "#{x.rating}" %></li>
+    <li>Favorite Memory: <%= "#{x.description}" %></li>
+  </ul>
 <br>
 
 <% end %>
