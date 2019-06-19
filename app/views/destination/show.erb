@@ -1,13 +1,14 @@
 <h1>destination show page</h1>
 
 
-<form method="post" action="/destination/<%=current_user.id%>/edit">
+<form method="post" action="/destination/<%=current_user.id%>">
+  <input type="hidden" id="hidden" name="_method" value="patch">
 
 <% current_user.destinations.each do |x| %>
 <hr>
 <br>
   <ul>
-    <li>City: <input type="text" name="new_city" value="<%= "#{x.city}" %>"></li>
+    <li>City: <input type="text" name="city" value= "<%= "#{x.city}" %>"></li>
     <li>Country: <%="#{x.country}"%></li>
     <li>Rating: <%= "#{x.rating}" %></li>
     <li>Favorite Memory: <%= "#{x.description}" %></li>
@@ -15,4 +16,7 @@
 <br>
 
 <% end %>
+</form>
+<form>
+<input type="submit" value="Edit">
 </form>
