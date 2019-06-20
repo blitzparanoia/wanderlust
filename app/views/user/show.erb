@@ -1,1 +1,30 @@
 <h1>Welcome <%= current_user.username %>,</h1>
+
+<h3>Here lives all the places you have ever visited...</h3>
+
+<% if logged_in? %>
+<p>Are you a world class traveler? Add more places!
+<form action="/destination/new">
+  <input type="submit" value="Add Place">
+</form>
+<form action="/destination">
+   <input type="submit" value="List of Places" />
+</form>
+<form action="/logout">
+   <input type="submit" value="Logout" />
+</form>
+
+<% end %>
+
+<% current_user.destinations.each do |x| %>
+<hr>
+<br>
+  <ul>
+    <li>City: <%= "#{x.city}" %></li>
+    <li>Country: <%="#{x.country}"%></li>
+    <li>Rating: <%= "#{x.rating}" %></li>
+    <li>Favorite Memory: <%= "#{x.description}" %></li>
+  </ul>
+<br>
+
+<% end %>
