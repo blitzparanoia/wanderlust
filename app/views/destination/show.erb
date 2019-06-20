@@ -1,14 +1,21 @@
-<h1>destination show page</h1>
+<h1>Welcome <%= current_user.username %>,</h1>
 
-
-<form method="post" action="/destination/<%=current_user.id%>">
-  <input type="hidden" id="hidden" name="_method" value="patch">
+<h2>Here lies all the places you have ever visited...</h2>
+<form method="POST" action="/destination/new">
+  <p>Are you a world class traveler? Add more places! <input type="submit" id="submit" value="New Destination"></p>
+</form>
+<form action="/destination/edit">
+    <input type="submit" value="Edit" />
+</form>
+<form action="/logout">
+    <input type="submit" value="Logout" />
+</form>
 
 <% current_user.destinations.each do |x| %>
 <hr>
 <br>
   <ul>
-    <li>City: <input type="text" name="city" value= "<%= "#{x.city}" %>"></li>
+    <li>City: <%= "#{x.city}" %></li>
     <li>Country: <%="#{x.country}"%></li>
     <li>Rating: <%= "#{x.rating}" %></li>
     <li>Favorite Memory: <%= "#{x.description}" %></li>
@@ -16,7 +23,3 @@
 <br>
 
 <% end %>
-</form>
-<form>
-<input type="submit" value="Edit">
-</form>

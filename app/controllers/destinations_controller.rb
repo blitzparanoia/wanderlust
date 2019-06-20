@@ -1,9 +1,24 @@
 class DestinationsController < ApplicationController
 
-    get '/destination' do
-      @destinations = Destination.all
-      erb :'/user/show'
-    end
+    get "/destination" do
+  if logged_in?
+    @user = User.find(session[:user_id])
+    @place = Destination.all
+  else
+    redirect '/login'
+  end
+  erb :"/destination/show"
+  end
+
+  get "/destination/new" do
+  if logged_in?
+    @user = User.find(session[:user_id])
+  else
+    redirect '/login'
+  end
+
+  erb :"/destination/new"
+end
 
     post '/destination' do
  if params[:city] == ""
@@ -17,80 +32,57 @@ class DestinationsController < ApplicationController
   end
 end
 
-    get '/destination/new' do
-      erb :'/destination/new'
-    end
-
-    post '/destination/new' do
-        if session[:user_id] != nil
-          redirect '/destination/new'
-        else
-        redirect '/login'
-     end
-    end
-
-    get '/destination/:id' do
-      @destination = Destination.find_by(id: params[:id])
-      erb :'/destination/show'
-  end
-
-  # get '/destination/:id/edit' do
-  #   if logged_in?
-  #     @destination = Destination.find(params[:id])
-  #     if @destination.user_id == current_user.id
-  #       erb :'destination/edit'
-  #     else
-  #       redirect '/destination/:id'
-  #     end
-  #   else
-  #     redirect '/login'
-  #   end
-  # end
-  #
-  # patch '/destination/:id' do
-  #   @destination = Destination.find(params[:id])
-  #   @destination.update(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description])
-  #   erb :'/destination/show'
-  #   redirect "/destination/#{@destination.id}"
-  # end
-
-
-    get '/destination/:id/edit' do
-   if logged_in?
-     if Destination.find(params[:id]).user.id == session[:user_id]
-       @destination = Destination.find(params[:id])
-       @user = @destination.user
-       erb :"/destination/edit"
-     else
-       redirect '/destination'
-     end
-   else
-     redirect '/login'
-   end
-  end
-
-
-    patch '/destination/:id/edit' do
-      @destination = Destination.find(params[:id])
- if params[:city].empty?
-   redirect "/destination/#{@destination.id}/edit"
- else
-   if @destination.update(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description] )
-     redirect "/destination/#{@destination.id}"
-   else
-     redirect "/destination/#{@destination.id}"
-   end
- end
-end
-
-    delete '/destination/:id/delete' do
-      if Destination.find(params[:id]).user.id == session[:user_id]
-    @destination = Destination.find(params[:id])
-    @destination.destroy
-    redirect "/destination"
-  else
-    redirect '/destination'
-  end
-    end
+#
+#     post '/destination/new' do
+#         if session[:user_id] != nil
+#           redirect '/destination/new'
+#         else
+#         redirect '/login'
+#      end
+#     end
+#
+#     get '/destination/:id' do
+#       if logged_in?
+#       @destination = Destination.find_by(params[:id])
+#       erb :'/destination/show'
+#     else
+#       redirect '/login'
+#     end
+#   end
+#
+#
+#     get '/destination/:id/edit' do
+#    if logged_in?
+#      if Destination.find(params[:id]).user.id == session[:user_id]
+#        @destination = Destination.find(params[:id])
+#        @user = @destination.user
+#        erb :"/destination/edit"
+#      else
+#        redirect '/destination'
+#      end
+#    else
+#      redirect '/login'
+#    end
+#   end
+#
+#
+#   patch '/destination/:id' do
+#       @destination = Destination.find(params[:id])
+#       @destination.update(city: params[:city])
+#       @destination.save
+#       #redirect "/destination/"
+#       erb :"/destination/#{@destination.id}/show"
+#   end
+#
+#
+#     delete '/destination/:id/delete' do
+#       if Destination.find(params[:id]).user.id == session[:user_id]
+#     @destination = Destination.find(params[:id])
+#     @destination.destroy
+#     redirect "/destination"
+#   else
+#     redirect '/destination'
+#   end
+# end
 
   end
