@@ -4,17 +4,12 @@
 
 <% if logged_in? %>
 <p>Are you a world class traveler? Add more places!
-<form action="/destination/new">
-  <input type="submit" value="Add Place">
-</form>
-<form action="/destination">
-   <input type="submit" value="List of Places" />
-</form>
-<form action="/logout">
-   <input type="submit" value="Logout" />
-</form>
-
-<% end %>
+  <br>
+  <br><a href="/destination/new">Add Place</a>
+  <br><a href="/destination">View List Places</a>
+  <br><a href="/logout">Logout</a>
+  <br>
+  <% end %>
 
 <% current_user.destinations.each do |x| %>
 <hr>

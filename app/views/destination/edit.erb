@@ -1,18 +1,16 @@
-<h1>destination edit page</h1>
-
-<form method="post" action="/destination/<%= @destination.id %>">
+<h1>Edit Place:</h1>
+<form class="" action="/destination/<%= @destination.id %>" method="post">
   <input type="hidden" name="_method" value="patch">
 
-<% current_user.destinations.each do |x| %>
-<hr>
-<br>
-  <ul>
-    <li>City: <input type="text" name="city" value= "<%= "#{x.city}" %>"></li>
-    <li>Country: <input type="text" name="country" value= "<%= "#{x.country}" %>"></li>
-    <li>Rating: <input type="text" name="rating" value= "<%= "#{x.rating}" %>"></li>
-    <li>Favorite Memory: <input type="text" name="description" value= "<%= "#{x.description}" %>"></li>
-  </ul>
-<br>
-<input type="submit" id="submit" value="Edit">
+  <br>
+    <ul>
+      <li><label for="city">City:</label> <input type="text" name="city" value= "<%= @destination.city %>"></li>
+      <li><label for="country">Country:</label> <input type="text" name="country" value= "<%= @destination.country %>"></li>
+      <li><label for="rating">Rating:</label> <input type="text" name="rating" value= "<%= @destination.rating %>"></li>
+      <li><label for="description">Favorite Memory:</label> <input type="text" name="description" value= "<%= @destination.description %>"></li>
+    </ul>
+  <br>
+
+  <input type="submit" value="Edit">
 </form>
 <% end %>

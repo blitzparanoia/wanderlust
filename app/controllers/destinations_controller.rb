@@ -13,7 +13,7 @@ class DestinationsController < ApplicationController
 
   post '/destination' do
     if !logged_in?
-      redirect "/"
+      redirect "/" # user needs to be logged in
   end
     if params[:city] != "" || params[:country] != "" || params[:description] != ""
       @destination = Destination.create(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description], user_id: current_user.id)
@@ -26,7 +26,7 @@ class DestinationsController < ApplicationController
 
   get '/destination/:id' do
     @destination = Destination.find_by(id: params[:id])
-    erb :'/destination/single'
+    erb :"/destination/show"
   end
 
 
@@ -67,5 +67,4 @@ end
       redirect to '/destination'
     end
   end
-
 end
