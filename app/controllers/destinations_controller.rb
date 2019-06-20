@@ -1,45 +1,36 @@
 class DestinationsController < ApplicationController
 
-#     get "/destination" do
-#   # if logged_in?
-#   #   @user = User.find(session[:user_id])
-#   #   @destination = Destination.all
-#   # else
-#   #   redirect '/login'
-#   # end
-#   # erb :"/destination/show"
-#   @destination = Destination.all
-#   erb :'/destination/show'
-#   end
-#
-#   get "/destination/new" do
-#   if logged_in?
-#     @user = User.find(session[:user_id])
-#   else
-#     redirect '/login'
-#   end
-#
-#   erb :"/destination/new"
-# end
-#
-#     post '/destination' do
-#  if !logged_in?
-#       redirect to '/login'
-#     end
-#
-#     if params[:city] != ""
-#       @destination = Destination.create(city: params[:city], user_id: current_user.id)
-#
-#       redirect to "/destination/#{@destination.id}"
-#     else
-#       redirect to '/destination/new'
-#     end
-# end
-#
-#         get '/destination/:id' do
-#           @destination = Destination.find_by(id: params[:id])
-#           erb :'/destination/show'
-#         end
+  get "/destination" do
+    @destination = Destination.all
+    erb :'/destination/show'
+  end
+
+
+  get "/destination/new" do
+    erb :"/destination/new"
+  end
+
+
+  post '/destination' do
+    if !logged_in
+      redirect "/"
+  end
+
+    if params[:city] != "" || params[:country] != "" || params[:description] != ""
+      @destination = Destination.create(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description], user_id: current_user.id)
+      redirect "/destination/#{@destination.id}"
+    else
+      redirect "/destination/new" # not a success
+    end
+  end
+
+
+  get '/destination/:id' do
+    @destination = Destination.find_by(id: params[:id])
+    erb :'/destination/show'
+  end
+
+  
 #
 #     get '/destination/:id/edit' do
 #         @destination = Destination.find_by(id: params[:id])
