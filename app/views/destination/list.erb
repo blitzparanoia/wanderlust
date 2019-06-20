@@ -1,0 +1,14 @@
+<h2>List of Places</h2>
+
+<% current_user.destinations.each do |x| %>
+<h4><a href="/destination/<%= x.id %>"> Click to edit</a></h4>
+<hr>
+<br>
+  <ul>
+    <li>City: <%= "#{x.city}" %></li>
+    <li>Country: <%="#{x.country}"%></li>
+    <li>Rating: <%= "#{x.rating}" %></li>
+    <li>Favorite Memory: <%= "#{x.description}" %></li>
+  </ul>
+<br>
+<% end %>

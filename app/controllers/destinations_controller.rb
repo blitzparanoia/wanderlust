@@ -2,7 +2,7 @@ class DestinationsController < ApplicationController
 
   get "/destination" do
     @destination = Destination.all
-    erb :'/destination/show'
+    erb :'/destination/list'
   end
 
 
@@ -12,10 +12,9 @@ class DestinationsController < ApplicationController
 
 
   post '/destination' do
-    if !logged_in
+    if !logged_in?
       redirect "/"
   end
-
     if params[:city] != "" || params[:country] != "" || params[:description] != ""
       @destination = Destination.create(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description], user_id: current_user.id)
       redirect "/destination/#{@destination.id}"
@@ -27,7 +26,7 @@ class DestinationsController < ApplicationController
 
   get '/destination/:id' do
     @destination = Destination.find_by(id: params[:id])
-    erb :'/destination/show'
+    erb :'/destination/single'
   end
 
 

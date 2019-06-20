@@ -1,11 +1,19 @@
 <h1>Welcome <%= current_user.username %>,</h1>
 
-<h2>Here lies all the places you have ever visited...</h2>
+<h3>Here lives all the places you have ever visited...</h3>
 
 <% if logged_in? %>
-<a href="/destiantion/new">Add Place </a>
-<a href="/destiantion">List of Places</a>
-<a href="/logout">Logout</a>
+<p>Are you a world class traveler? Add more places!
+<form action="/destination/new">
+  <input type="submit" value="Add Place">
+</form>
+<form action="/destination">
+   <input type="submit" value="List of Places" />
+</form>
+<form action="/logout">
+   <input type="submit" value="Logout" />
+</form>
+
 <% end %>
 
 <% current_user.destinations.each do |x| %>
