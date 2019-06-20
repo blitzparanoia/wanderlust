@@ -16,14 +16,132 @@
   <body>
     <div class="wrapper">
 
-    
+<!--Simply copy and paste to the <HEAD> section of your page.-->
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Mouse Text Blur from Rainbow Arch -->
+<!-- This script and many more from : -->
+<!-- http://rainbow.arch.scriptmania.com -->
+
+<!-- Mouse Text Blur from http://rainbow.arch.scriptmania.com
+
+var n4=(document.layers);
+var n6=(document.getElementById&&!document.all);
+var ie=(document.all);
+var o6=(navigator.appName.indexOf("Opera") != -1)?true:false;
+
+//Things you can alter here...........
+var msg="Coding is fun";
+var fnt="Arial";
+var clr="ffffff";
+var fsz=3;  //1 to 7 only
+var del=0.6; //Delay speed, must be under 1
+var num=(n6&&!o6)?10:20; //First value for N6 only. Struggles over 10
+var stopafter=5; //Stop and clear after x seconds
+
+//Alter nothing below............
+var _d=(n4||ie)?'document.':'document.getElementById("';
+var _a=(n4||n6)?'':'all.';
+var _r=(n6)?'")':'';
+var _s=(n4)?'':'.style';
+var tmr=null;
+var temp;
+var y=0;
+var x=0;
+var put=false;
+if (n4||n6){
+window.captureEvents(Event.MOUSEMOVE);
+function mouse1(e){
+ if (put) return false;
+ y = e.pageY+20-window.pageYOffset;
+ x = e.pageX+20;
+ }
+if (n4) window.onMouseMove=mouse1;
+else document.onmousemove=mouse1;
+}
+if (ie||o6){
+ function mouse2(){
+ if (put) return false;
+ y = (ie)?event.clientY+20:event.clientY+20-window.pageYOffset;
+ x = event.clientX+20;
+ }
+document.onmousemove=mouse2;
+}
+if (n4){
+for (i=0; i < num; i++)
+document.write('<layer name=text'+i+' top=0 left=0><font face='+fnt+' size='+fsz+' color='+clr+'>'+msg+'</font></layer>');
+}
+else{
+if (ie){
+document.write("<div id='outer' style='position:absolute;top:0px;left:0px'>");
+document.write("<div style='position:relative'>");
+}
+for (i=0; i < num; i++)
+document.write('<div id="text'+i+'" style="position:absolute;top:0px;left:0px;width:400px;height:20px"><font face='+fnt+' size='+fsz+' color='+clr+'>'+msg+'</font></div>');
+if (ie)
+document.write("</div></div>");
+}
+stopafter*=1000;
+y1=new Array();
+x1=new Array();
+y2=new Array();
+x2=new Array();
+for (i=0; i < num; i++){
+y1[i]=0;
+x1[i]=0;
+y2[i]=0;
+x2[i]=0;
+temp=eval(_d+_a+"text"+i+_r+_s);
+}
+var v=(n4)?"show":"visible";
+function follow(){
+sy=(n4||o6||n6)?window.pageYOffset:0;
+if (ie) outer.style.pixelTop=document.body.scrollTop;
+for (i=0; i < num; i++){
+temp=eval(_d+_a+"text"+i+_r+_s);
+temp.top=y1[i]+sy;
+temp.left=x1[i];
+temp.visibility=v;
+}
+}
+function stagger(){
+y1[0]=Math.round(y2[0]+=((y)-y2[0])*del);
+x1[0]=Math.round(x2[0]+=((x)-x2[0])*del);
+for (i=1; i < num; i++){
+y1[i]=Math.round(y2[i]+=(y1[i-1]-y2[i])*del);
+x1[i]=Math.round(x2[i]+=(x1[i-1]-x2[i])*del);
+}
+follow();
+tmr=setTimeout('stagger()',20);
+}
+stagger();
+function dsbl(){
+v=(n4)?"hide":"hidden";
+put=true;
+x=0;
+y=0;
+setTimeout('clearTimeout(tmr)',stopafter+100);
+}
+setTimeout('dsbl()',stopafter);
+//-->
+</SCRIPT>
+
+
+
 
         <%= yield %>
 
       <footer class="branding">
+        <br>
+        <br>This site is best viewed in:
+        <br><img src="https://zachholman.com/images/posts/ie4.gif" alt="best_view_in">
+
+        <br>
         <small>&copy; 2019 <strong>Wanderlust</strong></small>
       </footer>
     </div>
+
+
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <!--[if lt IE 7]>
