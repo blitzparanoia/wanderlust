@@ -1,6 +1,6 @@
 <h1>destination edit page</h1>
 
-<form method="post" action="/destination/<%= current_user.id %>">
+<form method="post" action="/destination/<%= @destination.id %>">
   <input type="hidden" name="_method" value="patch">
 
 <% current_user.destinations.each do |x| %>
