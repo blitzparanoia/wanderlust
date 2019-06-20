@@ -1,17 +1,10 @@
 <h2>List of Places</h2>
 
-<% if logged_in? %>
-<br> Menu:
-<br>
-<br><a href="/destination/new">Add Place</a>
-<br><a href="/destination">View List Places</a>
-<br><a href="/logout">Logout</a>
-<% end %>
-<br>
+<br>Click a place to edit.
 <br>
 <% current_user.destinations.each do |x| %>
 <hr>
-<h4><a href="/destination/<%= x.id %>">Edit</a></h4>
+<h4><a href="/destination/<%= x.id %>/edit">Edit</a></h4>
 <br>
   <ul>
     <li>City: <%= "#{x.city}" %></li>

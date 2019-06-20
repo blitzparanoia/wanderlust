@@ -1,5 +1,5 @@
 <h1>Edit Place:</h1>
-<form class="" action="/destination/<%= @destination.id %>" method="post">
+<form class="" action="/destination/<%=@destination.id%>" method="post">
   <input type="hidden" name="_method" value="patch">
 
   <br>
@@ -12,5 +12,8 @@
   <br>
 
   <input type="submit" value="Edit">
+
+<form class="" action="/destination/<%= @destination.id %>" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" name="" value="Delete">
 </form>
-<% end %>

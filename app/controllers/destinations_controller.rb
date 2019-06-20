@@ -1,6 +1,6 @@
 class DestinationsController < ApplicationController
 
-  get "/destination" do
+  get '/destination' do
     @destination = Destination.all
     erb :'/destination/list'
   end
@@ -36,7 +36,7 @@ class DestinationsController < ApplicationController
       if @destination.user == current_user
        erb :'/destination/edit'
      else
-       redirect "/user/#{@destination.id}"
+       redirect "/destination/#{@destination.id}"
      end
    else
      redirect '/login' # user needs to be logged in
@@ -45,13 +45,13 @@ class DestinationsController < ApplicationController
 
 
   patch '/destination/:id' do
-    @destination = Destination.find(id: params[:id])
+    @destination = Destination.find_by(id: params[:id])
     if logged_in?
       if @destination.user == current_user && params[:city] != "" || params[:country] != "" || params[:description] != ""
         @destination.update(city: params[:city], country: params[:country], rating: params[:rating], description: params[:description])
       redirect "/destination/#{@destination.id}" # items are updated
     else
-     redirect to "/user/#{@destination.id}"
+     redirect "/user/#{@destination.id}"
    end
  else
    redirect to '/login' # user not logged in
@@ -59,12 +59,12 @@ class DestinationsController < ApplicationController
 end
 
   delete '/destination/:id' do
-    @destination = Destination.find(id: params[:id])
+    @destination = Destination.find_by(id: params[:id])
     if @destination.user == current_user
       @destination.destroy
-      redirect to '/destination'
+      redirect '/destination'
     else
-      redirect to '/destination'
+      redirect '/destination'
     end
   end
 end
