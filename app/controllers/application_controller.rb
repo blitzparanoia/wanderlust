@@ -10,17 +10,17 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    erb :index
+      erb :index
   end
 
   helpers do
     def logged_in?
-     true if !session[:user_id].nil?
-   end
+      !!current_user
+    end
 
-   def current_user
-     User.find(session[:user_id])
-   end
+    def current_user
+      @current_user ||= User.find_by(id: session[:user_id])
+    end
   end
 
 end
